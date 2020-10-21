@@ -2,7 +2,6 @@ package com.ml.featureservice.model;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,15 +11,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/**
+ * This is a model describing User type
+ */
+
 @Entity
 @Table(name="users")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private long id;
 	private String email;
 	
+	/* Joining User to Feature, many users can have many features */
 	@ManyToMany
 	@JoinTable(name="JOIN_USER_FEATURE",
 	joinColumns= {@JoinColumn(name="featureid")},

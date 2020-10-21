@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByEmail(String email) {
 		
+		/* Look user up and return if it is present, otherwise return null */
 		Optional<User> userDb = userRepository.findUserByEmail(email);
 		
 		if (userDb.isPresent()) {
