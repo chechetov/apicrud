@@ -16,11 +16,14 @@ This is an application which allows setting and getting feature switches for use
 
 1. Create feature-user combination at
 `http://localhost:8080/feature` using POST request with body
-`{
+
+```json
+{
 "featureName": "test",
 "email": "test",
 "enable": true
-}`
+}
+```
 	
 	Responses:
 	1. Empty 200 OK if combination was created in the database
@@ -30,5 +33,8 @@ This is an application which allows setting and getting feature switches for use
 `http://localhost:8080/feature?email=test&featureName=test`
 
 	Response:
-	`{
-	"canAccess": true }`
+	```json
+	{
+	"canAccess": true 
+	}
+	```
