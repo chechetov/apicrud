@@ -65,11 +65,12 @@ public class User {
 	}
 	
 	public User createWithEmail(String userEmail) {
+		System.out.println("createUserWithEmail(): " + userEmail);
 		this.email = userEmail;
 		return this;
 	}
-//	@Override
-//	public String toString() {
-//		return "User [id=" + id + ", email=" + email + ", features=" + features + "]";
-//	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", features=" + features + "]";
+	}
 }

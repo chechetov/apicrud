@@ -77,7 +77,4 @@ public class Feature {
 	public String toString() {
 		return "Feature [id=" + id + ", name=" + name + ", users=" + users +"]";
 	}
-	
-	
-	
 }

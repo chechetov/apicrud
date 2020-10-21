@@ -42,9 +42,8 @@ public class FeatureController {
 			featureCreated = featureService.createFeature(featureName, email, enable);
 		}
 		catch (Exception e) {
-			/* If something bad happened - I want to know */
+			/* If something bad happened - we want to know */
 			e.printStackTrace();
-
 		}
 		
 		if (featureCreated) {

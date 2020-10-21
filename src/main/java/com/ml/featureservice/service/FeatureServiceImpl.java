@@ -46,7 +46,9 @@ public class FeatureServiceImpl implements FeatureService {
 		User userDb = userService.getUserByEmail(userEmail);
 		
 		if (userDb == null) {
+			System.out.println("User was null...creating one");
 			userDb = new User().createWithEmail(userEmail);
+			System.out.println("Created: " + userDb.toString());
 		}
 		
 		if (isEnabled) {
@@ -56,9 +58,8 @@ public class FeatureServiceImpl implements FeatureService {
 			featureDb.getUsers().remove(userDb);
 		}
 		
-		/* Save objects to database */ 
+		/* Save feature object to database */ 
 		featureRepository.save(featureDb);
-		userRepository.save(userDb);
 		
 		return true;
 	}
