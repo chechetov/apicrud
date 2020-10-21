@@ -38,3 +38,10 @@ This is an application which allows setting and getting feature switches for use
 	"canAccess": true 
 	}
 	```
+	
+---
+**Note**
+
+Listens on all available interfaces (0.0.0.0)
+
+---
