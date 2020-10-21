@@ -6,7 +6,9 @@ This is an application which allows setting and getting feature switches for use
 ## How to run it
 
 1. Clone repository and change to project folder
-2. Run application with `mvnw spring-boot:run`
+2. Run application with `./mvnw spring-boot:run`
+
+	**for Linux & MacOS, running for windows will be the same but with `mvwn.cmd`
 
 
 ## Examples
