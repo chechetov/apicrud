@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +19,8 @@ import javax.persistence.Table;
  * This is a model describing Feature type
  */
 
-@Entity
-@Table(name="features")
+@Entity(name="Feature")
+@Table(name="feature")
 public class Feature {
 
 	@Id
@@ -27,10 +29,15 @@ public class Feature {
 	private String name;
 	
 	/* Joining Feature to User, many features can have many users */
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="JOIN_USER_FEATURE",
-	joinColumns= {@JoinColumn(name="userid")},
-	inverseJoinColumns={@JoinColumn(name="featureid")})
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(
+            name = "join_feature_user",
+            joinColumns = @JoinColumn(name = "feature_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> users = new HashSet<User>();
 	
 	public long getFeatureId() {
@@ -55,9 +62,8 @@ public class Feature {
 		this.users = users;
 	}
 	
-	public Feature(String featureName, HashSet<User> users) {
+	public Feature(String featureName) {
 		this.name = featureName;
-		this.users = users;
 	}
 	
 	public Feature() {

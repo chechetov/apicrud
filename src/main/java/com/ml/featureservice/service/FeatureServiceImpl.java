@@ -30,6 +30,7 @@ public class FeatureServiceImpl implements FeatureService {
 		/* Checking if Feature and User are already in database, creating them otherwise */
 		Feature featureDb = this.getFeatureByName(featureName);
 		
+		/* Checking if there is such a feature with this user already */
 		if (featureDb!= null && this.isEnabledForUser(featureName, userEmail) == isEnabled) {
 			
 			/* No update needed, return false */

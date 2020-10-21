@@ -5,11 +5,10 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -17,8 +16,8 @@ import javax.persistence.Table;
  * This is a model describing User type
  */
 
-@Entity
-@Table(name="users")
+@Entity(name="User")
+@Table(name="user")
 public class User {
 	
 	@Id
@@ -26,11 +25,13 @@ public class User {
 	private long id;
 	private String email;
 	
-	/* Joining User to Feature, many users can have many features */
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="JOIN_USER_FEATURE",
-	joinColumns= {@JoinColumn(name="featureid")},
-	inverseJoinColumns={@JoinColumn(name="userid")})
+	/* Mapping users to features */
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "users")
 	private Set<Feature> features = new HashSet<Feature>();
 	
 
@@ -56,9 +57,8 @@ public class User {
 		this.features = features;
 	}
 	
-	public User(String email, Set<Feature> features) {
+	public User(String email) {
 		this.email = email;
-		this.features = features;
 	}
 	
 	public User() {
@@ -68,4 +68,8 @@ public class User {
 		this.email = userEmail;
 		return this;
 	}
+//	@Override
+//	public String toString() {
+//		return "User [id=" + id + ", email=" + email + ", features=" + features + "]";
+//	}
 }
