@@ -36,17 +36,23 @@ public class FeatureController {
 		String email 	   = (String) requestBody.get("email");
 		Boolean enable 	   = (Boolean) requestBody.get("enable");
 		
+		/* Try to create feature */
+		boolean featureCreated = false;
 		try {
-			/* Create feature and return empty HTTP 200 */
-			featureService.createFeature(featureName, email, enable);
+			featureCreated = featureService.createFeature(featureName, email, enable);
+		}
+		catch (Exception e) {
+			/* If something bad happened - I want to know */
+			e.printStackTrace();
+
+		}
+		
+		if (featureCreated) {
+			/* Return empty HTTP 200 */
 			return ResponseEntity.ok(null);
 		}
-		catch(Exception e) {
-			
-			/* Otherwise, return HTTP 304  */
-			e.printStackTrace();
+		else {
 			return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-			
 		}
 	}
 }

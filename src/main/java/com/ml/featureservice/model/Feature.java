@@ -2,6 +2,8 @@ package com.ml.featureservice.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +27,7 @@ public class Feature {
 	private String name;
 	
 	/* Joining Feature to User, many features can have many users */
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="JOIN_USER_FEATURE",
 	joinColumns= {@JoinColumn(name="userid")},
 	inverseJoinColumns={@JoinColumn(name="featureid")})
@@ -65,5 +67,11 @@ public class Feature {
 		this.name = featureName;
 		return this;
 	}
+	@Override
+	public String toString() {
+		return "Feature [id=" + id + ", name=" + name + ", users=" + users +"]";
+	}
+	
+	
 	
 }

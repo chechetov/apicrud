@@ -25,16 +25,25 @@ public class FeatureServiceImpl implements FeatureService {
 	private UserServiceImpl 	userService;
 
 	@Override
-	public void createFeature(String featureName, String userEmail, boolean isEnabled) {
+	public boolean createFeature(String featureName, String userEmail, boolean isEnabled) {
 		
 		/* Checking if Feature and User are already in database, creating them otherwise */
 		Feature featureDb = this.getFeatureByName(featureName);
+		
+		if (featureDb!= null && this.isEnabledForUser(featureName, userEmail) == isEnabled) {
+			
+			/* No update needed, return false */
+			System.out.println("No update needed! ");
+			System.out.println("FeatureDB: " + featureDb.toString());
+			return false;
+		}
 		
 		if (featureDb == null) {
 			featureDb = new Feature().createWithName(featureName);
 		}
 		
 		User userDb = userService.getUserByEmail(userEmail);
+		
 		if (userDb == null) {
 			userDb = new User().createWithEmail(userEmail);
 		}
@@ -49,6 +58,8 @@ public class FeatureServiceImpl implements FeatureService {
 		/* Save objects to database */ 
 		featureRepository.save(featureDb);
 		userRepository.save(userDb);
+		
+		return true;
 	}
 
 	@Override
