@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -21,7 +22,8 @@ import javax.persistence.Table;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+	@SequenceGenerator(name="user_generator", sequenceName = "user_seq")
 	private long id;
 	private String email;
 	
@@ -65,12 +67,11 @@ public class User {
 	}
 	
 	public User createWithEmail(String userEmail) {
-		System.out.println("createUserWithEmail(): " + userEmail);
 		this.email = userEmail;
 		return this;
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", features=" + features + "]";
+		return "User [id=" + id + ", email=" + email + "]";
 	}
 }

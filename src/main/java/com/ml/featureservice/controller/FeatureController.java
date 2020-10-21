@@ -38,6 +38,7 @@ public class FeatureController {
 		
 		/* Try to create feature */
 		boolean featureCreated = false;
+		
 		try {
 			featureCreated = featureService.createFeature(featureName, email, enable);
 		}

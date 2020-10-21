@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -24,16 +24,13 @@ import javax.persistence.Table;
 public class Feature {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feature_generator")
+	@SequenceGenerator(name="feature_generator", sequenceName = "feature_seq")	
 	private long id;
 	private String name;
 	
 	/* Joining Feature to User, many features can have many users */
-	@ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
             name = "join_feature_user",
             joinColumns = @JoinColumn(name = "feature_id"),
@@ -75,6 +72,6 @@ public class Feature {
 	}
 	@Override
 	public String toString() {
-		return "Feature [id=" + id + ", name=" + name + ", users=" + users +"]";
+		return "Feature [id=" + id + ", name=" + name + "]";
 	}
 }

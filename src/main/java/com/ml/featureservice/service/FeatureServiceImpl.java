@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.ml.featureservice.model.Feature;
 import com.ml.featureservice.model.User;
 import com.ml.featureservice.repositories.FeatureRepository;
-import com.ml.featureservice.repositories.UserRepository;
 
 @Service
 @Transactional
@@ -19,8 +18,6 @@ public class FeatureServiceImpl implements FeatureService {
 	
 	@Autowired
 	private FeatureRepository 	featureRepository;
-	@Autowired
-	private UserRepository		userRepository;
 	@Autowired
 	private UserServiceImpl 	userService;
 
@@ -34,8 +31,6 @@ public class FeatureServiceImpl implements FeatureService {
 		if (featureDb!= null && this.isEnabledForUser(featureName, userEmail) == isEnabled) {
 			
 			/* No update needed, return false */
-			System.out.println("No update needed! ");
-			System.out.println("FeatureDB: " + featureDb.toString());
 			return false;
 		}
 		
@@ -46,9 +41,7 @@ public class FeatureServiceImpl implements FeatureService {
 		User userDb = userService.getUserByEmail(userEmail);
 		
 		if (userDb == null) {
-			System.out.println("User was null...creating one");
 			userDb = new User().createWithEmail(userEmail);
-			System.out.println("Created: " + userDb.toString());
 		}
 		
 		if (isEnabled) {
