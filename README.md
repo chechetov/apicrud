@@ -1,4 +1,4 @@
-# Technical Assesment
+# Trying my skills in Spring Boot
 
 This is an application which allows setting and getting feature switches for users
 
